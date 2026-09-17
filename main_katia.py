@@ -12,6 +12,7 @@ from patient_katia import *
 import matplotlib.pyplot as plt
 import numpy as np
 import statistics
+from scipy import stats
 
 Patient.instantiate_from_csv(r"C:\Users\kabel\OneDrive\Desktop\Comp BME\Mod 1\Fung5_Module1\Metadata and Protein Data for Module 1.csv")
 
@@ -49,6 +50,9 @@ male_mean = statistics.mean(male_amyloid)
 female_stdev = statistics.stdev(female_amyloid)
 male_stdev = statistics.stdev(male_amyloid)
 
+# running a t-test to compare the means of Amyloid-Beta40 levels in Males vs. Females
+t_stat, p_value = stats.ttest_ind(female_amyloid, male_amyloid)
+
 # printing out the mean and standard deviation of Amyloid-Beta40 levels in Males vs. Females
 print("Female Amyloid-Beta40 Mean: ")
 print(f"Mean = {female_mean}")
@@ -58,6 +62,10 @@ print("Male Amyloid-Beta40 Mean: ")
 print(f"Mean = {male_mean}")
 print(f"Standard deviation = {male_stdev}")
 
+print("T-test results: ")
+print("t-statistic =", t_stat)
+print("p-value =", p_value)
+
 # labeling the bar graph with error bars
 sex_labels = ["Female", "Male"]
 mean_sex = [female_mean, male_mean]
@@ -66,6 +74,7 @@ yerr = [np.zeros(len(mean_sex)), stdev_sex]
 
 # making a bar graph of different Amyloid-Beta40 levels in Males vs. Females
 plt.bar(sex_labels, mean_sex, yerr=yerr, capsize=10)
+plt.text(0.5, 150, "t = " + str(round(t_stat, 2)) + "\np = " + str(round(p_value, 4)),ha="center")
 plt.title("Average Amyloid-Beta40 Levels by Sex")
 plt.xlabel("Sex")
 plt.ylabel("Average Amyloid-Beta40 Levels")
