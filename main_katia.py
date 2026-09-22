@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import statistics
 from scipy import stats
+from sklearn.linear_model import LinearRegression
 
 Patient.instantiate_from_csv(r"C:\Users\kabel\OneDrive\Desktop\Comp BME\Mod 1\Fung5_Module1\Metadata and Protein Data for Module 1.csv")
 
@@ -89,8 +90,23 @@ for patient in Patient.all_patients:
     amyloid40.append(patient.ABeta40)
     age_at_death.append(patient.age_at_death)
 
+x = np.array(amyloid40).reshape(-1, 1)
+y = np.array(age_at_death).reshape(-1, 1)
+
+# fitting a linear regression model to the data
+model = LinearRegression()
+model.fit(x, y)
+x_sorted = np.sort(x, axis=0)
+y_pred = model.predict(x_sorted)
+
+# print R-squared value and y equation on the graph
+slope = model.coef_[0]
+intercpt = model.intercept_
+r2 = model.score(x, y)
+
 # making a scatter plot of amyloid40 levels vs. age at death
 plt.scatter(amyloid40, age_at_death, color='blue')
+plt.plot(x_sorted, y_pred, color = 'red')
 plt.title("Amyloid-Beta40 Levels vs. Age at Death")
 plt.xlabel("Amyloid-Beta40 Levels")
 plt.ylabel("Age at Death")
