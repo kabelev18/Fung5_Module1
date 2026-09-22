@@ -1,6 +1,6 @@
 import pandas as pd
 
-df= pd.read_csv("/Users/phong/Desktop/BME 2315/Mod 1/Metadata and Protein Data for Module 1.csv")
+df= pd.read_csv("/Users/phong/Documents/GitHub/Fung5_Module1/Metadata and Protein Data for Module 1.csv")
 
 for header in df.columns:
     print(header)   
@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import statistics
 # Create Patient objects using the information stored in the CSV file
-Patient.instantiate_from_csv(r"/Users/phong/Desktop/BME 2315/Mod 1/Metadata and Protein Data for Module 1.csv")
+Patient.instantiate_from_csv("/Users/phong/Documents/GitHub/Fung5_Module1/Metadata and Protein Data for Module 1.csv")
 
 
 # Print the information stored for each patient
@@ -29,7 +29,7 @@ for patient in Patient.all_patients:
 # 6. Select patients who have a graduate degree and an APOE 4_4 genotype
 graduate_APOE44_patients = Patient.filter(
     Patient.all_patients,
-    highest_education="Graduate (PhD/Masters)",
+    Highest_level_of_education="Graduate (PhD/Masters)",
     APOE_genotype="4_4"
 )
 
@@ -47,10 +47,10 @@ male_pTAU = []
 for patient in Patient.all_patients:
 
     if patient.sex == "Female":
-        female_pTAU.append(patient.pTAU)
+        female_pTAU.append(float(patient.pTAU))
 
     if patient.sex == "Male":
-        male_pTAU.append(patient.pTAU)
+        male_pTAU.append(float(patient.pTAU))
 
 
 # Calculate the average pTAU level for each sex
@@ -92,8 +92,8 @@ age_at_death = []
 
 for patient in Patient.all_patients:
 
-    pTAU.append(patient.pTAU)
-    age_at_death.append(patient.age_at_death)
+    pTAU.append(float(patient.pTAU))
+    age_at_death.append(int(patient.age_at_death))
 
 # Plot pTAU levels against age at death for each patient
 plt.scatter(pTAU, age_at_death)
