@@ -42,7 +42,7 @@ class Patient:
 
 # creating a class method to filter the list of patients based on sex and years of education
     @classmethod
-    def filter(cls, list, sex="any", years_of_ed="any"):
+    def filter(cls, list, sex="any"):
 
         all_patients = list
         remove_list = []
@@ -50,8 +50,6 @@ class Patient:
 # looping through the list of patients and removing any patients that do not match the filter criteria
         for patient in all_patients:
             if sex != "any" and patient.sex != sex:
-                remove_list.append(patient)
-            elif years_of_ed != "any" and patient.years_of_ed <= years_of_ed:
                 remove_list.append(patient)
 
         all_patients = [patient for patient in all_patients if patient not in remove_list]
